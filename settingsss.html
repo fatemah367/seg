@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf5ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      color: #4c1d95;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #fff;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #6d28d9;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #7c3aed;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d8b4fe;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #9333ea;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #9333ea;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #7e22ce;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #a78bfa;
+      color: #7c3aed;
+      margin-left: 10px;
+    }
+
+    .btn-outline:hover {
+      background: #f3e8ff;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    a {
+      color: #7c3aed;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #5b21b6;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚙️ Settings</h1>
+
+  <!-- Account Settings -->
+  <div class="card">
+    <h2>Account Settings</h2>
+    <label>Name</label>
+    <input type="text" placeholder="Your Name">
+
+    <label>Email</label>
+    <input type="email" placeholder="you@example.com">
+
+    <label>Profile Photo</label>
+    <input type="file">
+
+    <label>Old Password</label>
+    <input type="password" id="oldPassword">
+
+    <label>New Password</label>
+    <input type="password" id="newPassword">
+
+    <label>Confirm Password</label>
+    <input type="password" id="confirmPassword">
+
+    <button class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
+    <button class="btn btn-outline" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Preferences -->
+  <div class="card">
+    <h2>Preferences</h2>
+    <label>Language</label>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="ar">Arabic</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+    </select>
+  </div>
+
+  <!-- General -->
+  <div class="card">
+    <h2>General</h2>
+    <ul>
+      <li>📱 About the app (v1.0.0)</li>
+      <li>📄 Terms of Service & Privacy Policy</li>
+      <li>
+        📞 Help / Contact Support: 
+        <a href="mailto:scanifyteam@gmail.com">scanifyteam@gmail.com</a>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    function saveChanges() {
+      const oldPass = document.getElementById("oldPassword").value;
+      const newPass = document.getElementById("newPassword").value;
+      const confirmPass = document.getElementById("confirmPassword").value;
+
+      if (newPass !== confirmPass) {
+        alert("❌ New password and confirm password do not match!");
+        return;
+      }
+
+      alert("✅ Changes saved successfully!");
+    }
+
+    function logout() {
+      alert("You have been logged out!");
+    }
+  </script>
+</body>
+</html>
