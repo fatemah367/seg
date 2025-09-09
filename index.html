@@ -163,21 +163,49 @@
   </div>
 
   <script>
-    function saveChanges() {
-      const oldPass = document.getElementById("oldPassword").value;
-      const newPass = document.getElementById("newPassword").value;
-      const confirmPass = document.getElementById("confirmPassword").value;
+    // Auto-fill name & email from localStorage
+    window.onload = function () {
+      const savedFirstName = localStorage.getItem("userFirstName");
+      const savedLastName = localStorage.getItem("userLastName");
+      const savedEmail = localStorage.getItem("userEmail");
 
-      if (newPass !== confirmPass) {
-        alert("❌ New password and confirm password do not match!");
-        return;
+      if (savedFirstName && savedLastName && savedEmail) {
+        document.querySelectorAll("input[type='text']")[0].value = savedFirstName + " " + savedLastName;
+        document.querySelectorAll("input[type='email']")[0].value = savedEmail;
       }
+    };
 
-      alert("✅ Changes saved successfully!");
+    // Save changes & update localStorage
+    function saveChanges() {
+      const nameField = document.querySelectorAll("input[type='text']")[0].value.trim();
+      const emailField = document.querySelectorAll("input[type='email']")[0].value.trim();
+
+      if (nameField && emailField) {
+        const nameParts = nameField.split(" ");
+        localStorage.setItem("userFirstName", nameParts[0] || "");
+        localStorage.setItem("userLastName", nameParts[1] || "");
+        localStorage.setItem("userEmail", emailField);
+
+        const oldPass = document.getElementById("oldPassword").value;
+        const newPass = document.getElementById("newPassword").value;
+        const confirmPass = document.getElementById("confirmPassword").value;
+
+        if (newPass !== confirmPass) {
+          alert("❌ New password and confirm password do not match!");
+          return;
+        }
+
+        alert("✅ Changes saved successfully!");
+      } else {
+        alert("⚠️ Please enter valid details!");
+      }
     }
 
+    // Logout & clear localStorage
     function logout() {
+      localStorage.clear();
       alert("You have been logged out!");
+      window.location.href = "signup.html";
     }
   </script>
 </body>
