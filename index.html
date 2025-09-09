@@ -116,22 +116,22 @@
   <div class="card">
     <h2>Account Settings</h2>
     <label>Name</label>
-    <input type="text" placeholder="Your Name">
+    <input type="text" id="nameField" placeholder="Your Name">
 
     <label>Email</label>
-    <input type="email" placeholder="you@example.com">
+    <input type="email" id="emailField" placeholder="you@example.com">
 
     <label>Profile Photo</label>
     <input type="file">
 
     <label>Old Password</label>
-    <input type="password" id="oldPassword">
+    <input type="password" id="oldPassword" placeholder="Enter your old password">
 
     <label>New Password</label>
-    <input type="password" id="newPassword">
+    <input type="password" id="newPassword" placeholder="Enter new password">
 
     <label>Confirm Password</label>
-    <input type="password" id="confirmPassword">
+    <input type="password" id="confirmPassword" placeholder="Re-enter new password">
 
     <button class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
     <button class="btn btn-outline" onclick="logout()">Logout</button>
@@ -163,42 +163,63 @@
   </div>
 
   <script>
-    // Auto-fill name & email from localStorage
+    // Auto-fill name, email & password from localStorage
     window.onload = function () {
       const savedFirstName = localStorage.getItem("userFirstName");
       const savedLastName = localStorage.getItem("userLastName");
       const savedEmail = localStorage.getItem("userEmail");
 
-      if (savedFirstName && savedLastName && savedEmail) {
-        document.querySelectorAll("input[type='text']")[0].value = savedFirstName + " " + savedLastName;
-        document.querySelectorAll("input[type='email']")[0].value = savedEmail;
+      if (savedFirstName && savedLastName) {
+        document.getElementById("nameField").value = savedFirstName + " " + savedLastName;
+      }
+
+      if (savedEmail) {
+        document.getElementById("emailField").value = savedEmail;
       }
     };
 
     // Save changes & update localStorage
     function saveChanges() {
-      const nameField = document.querySelectorAll("input[type='text']")[0].value.trim();
-      const emailField = document.querySelectorAll("input[type='email']")[0].value.trim();
+      const nameField = document.getElementById("nameField").value.trim();
+      const emailField = document.getElementById("emailField").value.trim();
+      const oldPass = document.getElementById("oldPassword").value;
+      const newPass = document.getElementById("newPassword").value;
+      const confirmPass = document.getElementById("confirmPassword").value;
 
-      if (nameField && emailField) {
-        const nameParts = nameField.split(" ");
-        localStorage.setItem("userFirstName", nameParts[0] || "");
-        localStorage.setItem("userLastName", nameParts[1] || "");
-        localStorage.setItem("userEmail", emailField);
+      if (!nameField || !emailField) {
+        alert("⚠️ Please enter valid details!");
+        return;
+      }
 
-        const oldPass = document.getElementById("oldPassword").value;
-        const newPass = document.getElementById("newPassword").value;
-        const confirmPass = document.getElementById("confirmPassword").value;
+      // Update name & email in localStorage
+      const nameParts = nameField.split(" ");
+      localStorage.setItem("userFirstName", nameParts[0] || "");
+      localStorage.setItem("userLastName", nameParts[1] || "");
+      localStorage.setItem("userEmail", emailField);
 
+      // Handle password update
+      const savedPassword = localStorage.getItem("userPassword");
+
+      if (oldPass && oldPass !== savedPassword) {
+        alert("❌ Old password is incorrect!");
+        return;
+      }
+
+      if (newPass || confirmPass) {
         if (newPass !== confirmPass) {
           alert("❌ New password and confirm password do not match!");
           return;
         }
 
-        alert("✅ Changes saved successfully!");
-      } else {
-        alert("⚠️ Please enter valid details!");
+        if (newPass.length < 6) {
+          alert("⚠️ New password must be at least 6 characters!");
+          return;
+        }
+
+        localStorage.setItem("userPassword", newPass);
       }
+
+      alert("✅ Changes saved successfully!");
     }
 
     // Logout & clear localStorage
