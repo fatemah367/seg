@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-translate="settings_title">Settings Page</title>
-  <script src="js/translations.js"></script>
-  <script src="js/translate.js"></script>
+  <title>Settings Page</title>
   <style>
     body {
       margin: 0;
@@ -17,11 +15,13 @@
       padding: 20px;
       color: #4c1d95;
     }
+
     h1 {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 20px;
     }
+
     .card {
       background: #fff;
       width: 100%;
@@ -31,12 +31,14 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       padding: 24px;
     }
+
     .card h2 {
       font-size: 20px;
       font-weight: 600;
       color: #6d28d9;
       margin-bottom: 16px;
     }
+
     label {
       display: block;
       font-size: 14px;
@@ -44,6 +46,7 @@
       color: #7c3aed;
       margin-bottom: 6px;
     }
+
     input, select {
       width: 100%;
       padding: 10px;
@@ -53,9 +56,11 @@
       margin-bottom: 16px;
       outline: none;
     }
+
     input:focus, select:focus {
       border-color: #9333ea;
     }
+
     .btn {
       padding: 10px 16px;
       border: none;
@@ -63,61 +68,79 @@
       font-size: 14px;
       cursor: pointer;
     }
+
     .btn-primary {
       background: #9333ea;
       color: #fff;
     }
+
     .btn-primary:hover {
       background: #7e22ce;
     }
+
     .btn-outline {
       background: transparent;
       border: 1px solid #a78bfa;
       color: #7c3aed;
       margin-left: 10px;
     }
+
     .btn-outline:hover {
       background: #f3e8ff;
     }
+
     ul {
       list-style: none;
       padding: 0;
     }
+
     ul li {
       margin-bottom: 10px;
       font-size: 15px;
     }
+
     a {
       color: #7c3aed;
       text-decoration: underline;
     }
+
     a:hover {
       color: #5b21b6;
     }
   </style>
 </head>
 <body>
-  <h1 data-translate="settings_title">⚙️ Settings</h1>
+  <h1>⚙ Settings</h1>
+
+  <!-- Account Settings -->
   <div class="card">
-    <h2 data-translate="settings_account_title">Account Settings</h2>
-    <label data-translate="settings_name_label">Name</label>
-    <input type="text" id="nameField" placeholder="Your Name" data-translate-placeholder="settings_name_placeholder">
-    <label data-translate="settings_email_label">Email</label>
-    <input type="email" id="emailField" placeholder="you@example.com" data-translate-placeholder="settings_email_placeholder">
-    <label data-translate="settings_photo_label">Profile Photo</label>
+    <h2>Account Settings</h2>
+    <label>Name</label>
+    <input type="text" id="nameField" placeholder="Your Name">
+
+    <label>Email</label>
+    <input type="email" id="emailField" placeholder="you@example.com">
+
+    <label>Profile Photo</label>
     <input type="file">
-    <label data-translate="settings_old_password_label">Old Password</label>
-    <input type="password" id="oldPassword" placeholder="Enter your old password" data-translate-placeholder="settings_old_password_placeholder">
-    <label data-translate="settings_new_password_label">New Password</label>
-    <input type="password" id="newPassword" placeholder="Enter new password" data-translate-placeholder="settings_new_password_placeholder">
-    <label data-translate="settings_confirm_password_label">Confirm Password</label>
-    <input type="password" id="confirmPassword" placeholder="Re-enter new password" data-translate-placeholder="settings_confirm_password_placeholder">
-    <button class="btn btn-primary" data-translate="settings_save_button" onclick="saveChanges()">Save Changes</button>
-    <button class="btn btn-outline" data-translate="settings_logout_button" onclick="logout()">Logout</button>
+
+    <label>Old Password</label>
+    <input type="password" id="oldPassword" placeholder="Enter your old password">
+
+    <label>New Password</label>
+    <input type="password" id="newPassword" placeholder="Enter new password">
+
+    <label>Confirm Password</label>
+    <input type="password" id="confirmPassword" placeholder="Re-enter new password">
+
+    <button class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
+    <button class="btn btn-outline" onclick="logout()">Logout</button>
   </div>
+
+  <!-- Preferences -->
   <div class="card">
-    <h2 data-translate="settings_preferences_title">Preferences</h2>
-    <label data-translate="settings_language_label">Language</label>
+    <h2>Preferences</h2>
+    <label>Language</label>
     <select id="languageSelect">
       <option value="en">English</option>
       <option value="ar">Arabic</option>
@@ -125,73 +148,85 @@
       <option value="fr">French</option>
     </select>
   </div>
+
+  <!-- General -->
   <div class="card">
-    <h2 data-translate="settings_general_title">General</h2>
+    <h2>General</h2>
     <ul>
-      <li data-translate="settings_about">📱 About the app (v1.0.0)</li>
-      <li data-translate="settings_terms">📄 Terms of Service & Privacy Policy</li>
-      <li data-translate="settings_contact">📞 Help / Contact Support: <a href="mailto:scanifyteam@gmail.com">scanifyteam@gmail.com</a></li>
+      <li>📱 About the app (v1.0.0)</li>
+      <li>📄 Terms of Service & Privacy Policy</li>
+      <li>
+        📞 Help / Contact Support: 
+        <a href="mailto:scanifyteam@gmail.com">scanifyteam@gmail.com</a>
+      </li>
     </ul>
   </div>
-  <script>
-    const langSelector = document.getElementById('languageSelect');
-    langSelector.value = localStorage.getItem('selectedLanguage') || 'en';
-    langSelector.addEventListener('change', () => {
-      localStorage.setItem('selectedLanguage', langSelector.value);
-      applyTranslation(langSelector.value);
-    });
 
+  <script>
+    // Auto-fill name, email & password from localStorage
     window.onload = function () {
       const savedFirstName = localStorage.getItem("userFirstName");
       const savedLastName = localStorage.getItem("userLastName");
       const savedEmail = localStorage.getItem("userEmail");
+
       if (savedFirstName && savedLastName) {
         document.getElementById("nameField").value = savedFirstName + " " + savedLastName;
       }
+
       if (savedEmail) {
         document.getElementById("emailField").value = savedEmail;
       }
     };
 
+    // Save changes & update localStorage
     function saveChanges() {
       const nameField = document.getElementById("nameField").value.trim();
       const emailField = document.getElementById("emailField").value.trim();
       const oldPass = document.getElementById("oldPassword").value;
       const newPass = document.getElementById("newPassword").value;
       const confirmPass = document.getElementById("confirmPassword").value;
-      const lang = localStorage.getItem('selectedLanguage') || 'en';
+
       if (!nameField || !emailField) {
-        alert(translations[lang].settings_invalid_details);
+        alert("⚠ Please enter valid details!");
         return;
       }
+
+      // Update name & email in localStorage
       const nameParts = nameField.split(" ");
       localStorage.setItem("userFirstName", nameParts[0] || "");
       localStorage.setItem("userLastName", nameParts[1] || "");
       localStorage.setItem("userEmail", emailField);
+
+      // Handle password update
       const savedPassword = localStorage.getItem("userPassword");
+
       if (oldPass && oldPass !== savedPassword) {
-        alert(translations[lang].settings_wrong_old_password);
+        alert("❌ Old password is incorrect!");
         return;
       }
+
       if (newPass || confirmPass) {
         if (newPass !== confirmPass) {
-          alert(translations[lang].settings_password_mismatch);
+          alert("❌ New password and confirm password do not match!");
           return;
         }
+
         if (newPass.length < 6) {
-          alert(translations[lang].settings_password_short);
+          alert("⚠ New password must be at least 6 characters!");
           return;
         }
+
         localStorage.setItem("userPassword", newPass);
       }
-      alert(translations[lang].settings_changes_saved);
+
+      alert("✅ Changes saved successfully!");
     }
 
+    // Logout & clear localStorage
     function logout() {
-      const lang = localStorage.getItem('selectedLanguage') || 'en';
       localStorage.clear();
-      alert(translations[lang].settings_logout_message);
-      window.location.href = "https://username.github.io/signup-repo/";
+      alert("You have been logged out!");
+      window.location.href = "signup.html";
     }
   </script>
 </body>
